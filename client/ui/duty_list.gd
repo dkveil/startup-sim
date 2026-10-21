@@ -90,6 +90,7 @@ func _nearest(floor_id: int, pos: Vector2i) -> Dictionary:
 func _render() -> void:
 	for c in _rows.get_children():
 		if c != _head:
+			_rows.remove_child(c)
 			c.queue_free()
 	if _head.get_parent() == null:
 		_rows.add_child(_head)
@@ -110,4 +111,5 @@ func _render() -> void:
 		_rows.add_child(Ink.label("%s %s%s" % [mark, d.title, where], 15, color))
 	if week_goal > 0:
 		_rows.add_child(Ink.label("Tydzień: %d/%d" % [mini(week_done, week_goal), week_goal], 14, Ink.TEXT_DIM))
+	size = Vector2.ZERO
 	reset_size()

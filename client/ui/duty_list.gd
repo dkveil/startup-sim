@@ -15,6 +15,7 @@ var week_done := 0
 var week_goal := 0
 var floor_now := 0
 var floor_name: Callable = func(f: int) -> String: return "piętro %d" % f
+var room_of: Callable = func(_f: int, _x: int, _y: int) -> String: return ""
 var below: Control
 var folded := false
 var _snoozed := {}  # "floor:x:y" -> until (ms)
@@ -107,7 +108,12 @@ func _render() -> void:
 		elif d.state == Protocol.DUTY_BOTCHED:
 			mark = "✗"
 			color = Ink.TEXT_DIM
-		var where := "" if d.floor == floor_now or d.state != Protocol.DUTY_TODO else "  (%s)" % floor_name.call(d.floor)
+		var where := ""
+		if d.state == Protocol.DUTY_TODO:
+			var room: String = room_of.call(d.floor, d.x, d.y)
+			where = " — %s" % room if room != "" else ""
+			if d.floor != floor_now:
+				where += " (%s)" % floor_name.call(d.floor)
 		_rows.add_child(Ink.label("%s %s%s" % [mark, d.title, where], 15, color))
 	if week_goal > 0:
 		_rows.add_child(Ink.label("Tydzień: %d/%d" % [mini(week_done, week_goal), week_goal], 14, Ink.TEXT_DIM))

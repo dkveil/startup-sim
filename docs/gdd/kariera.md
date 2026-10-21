@@ -178,9 +178,11 @@ Małe zadania „jak w Among Us”, które dają pracy w biurze rozgrywkę. Wszy
 działa w pojedynkę: nic nie wymaga drugiego gracza, inni tylko ożywiają biuro.
 
 - **Przydział**: każdy zatrudniony (umowa podpisana) rano dostaje 3–4
-  obowiązki — losowe, różne, pasujące do działu (code review i vibecoding dla
-  działów technicznych, telefon do klienta dla biznesowych, reszta dla
-  wszystkich). Miejsce wykonania to konkretny kafel w budynku (kwiatek,
+  obowiązki — losowe, różne, co najmniej połowa z własnego działu, jeśli ma
+  swoje (IT: code review, vibecoding, prompt na produkcji, pipeline; AI: demo
+  dla zarządu; DevOps: alerty z nocy; Mobile: App Store; Finanse: faktury;
+  Marketing / Sales: kampania; obsługa klienta: zgłoszenia), reszta wspólna
+  (kwiatki, zmywarka, ekspres, lodówka, śmieci, telewizor, stand-up). Miejsce wykonania to konkretny kafel w budynku (kwiatek,
   zmywarka, ekspres, lodówka, kosz, telewizor, stół w sali spotkań, wolne
   biurko własnego działu), w miarę możliwości na piętrze działu.
 - **Lista** w lewym górnym rogu pod zegarem: tytuły, odhaczone ✓ / nieudane

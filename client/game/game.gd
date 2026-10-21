@@ -358,6 +358,13 @@ func setup(p_net, p_building, welcome: Dictionary, p_nick: String, args: Diction
 	clock_panel = cp
 	duty_list.below = cp
 	duty_list.floor_name = func(f: int) -> String: return building.floor_name(f)
+	duty_list.room_of = func(f: int, x: int, y: int) -> String:
+		var m = building.get_floor(f)
+		for off in [Vector2i.ZERO, Vector2i(0, 1), Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, -1)]:
+			var rid: int = m.room_at_tile(x + off.x, y + off.y) if m else 0
+			if rid != 0:
+				return m.room_name(rid)
+		return ""
 	status_layer.add_child(duty_list)
 	add_child(daylight)
 	mood_layer.layer = 4  # over the world, under the weather and the HUD

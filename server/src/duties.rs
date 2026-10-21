@@ -176,9 +176,14 @@ impl Duties {
         rng.shuffle(&mut picks);
         let [lo, hi] = self.per_day;
         let n = rng.usize(lo..=hi).min(picks.len());
-        picks
+        let (mut own, mut anyone): (Vec<_>, Vec<_>) = picks.into_iter().partition(|(d, _)| !d.departments.is_empty());
+        let own_n = own.len().min(n.div_ceil(2));
+        let mut today: Vec<_> = own.drain(..own_n).collect();
+        today.extend(anyone.drain(..anyone.len().min(n - today.len())));
+        today.extend(own.drain(..own.len().min(n - today.len())));
+        rng.shuffle(&mut today);
+        today
             .into_iter()
-            .take(n)
             .map(|(d, places)| {
                 let s = places[rng.usize(..places.len())];
                 Assigned { duty: d.id.clone(), floor: s.floor, x: s.x, y: s.y, state: state::TODO }
@@ -350,6 +355,17 @@ mod tests {
                 let duty = d.duty(&a.duty).unwrap();
                 assert!(duty.departments.is_empty() || duty.departments.contains(&2), "{} is not for Biznes", a.duty);
             }
+        }
+    }
+
+    #[test]
+    fn about_half_of_the_day_is_the_department_s_own_work() {
+        let d = Duties::builtin();
+        let mut rng = fastrand::Rng::with_seed(11);
+        for _ in 0..50 {
+            let list = d.assign(&mut rng, 1, &stations());
+            let own = list.iter().filter(|a| !d.duty(&a.duty).unwrap().departments.is_empty()).count();
+            assert!(own >= list.len().div_ceil(2), "{own} of {} for IT", list.len());
         }
     }
 
